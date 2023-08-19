@@ -17,8 +17,9 @@ async function fetchNewsArticlesByCategory(categories) {
             articles = responses.map(res => res.data.articles).flat();
             return articles;
         }
-    }catch (err) {
-        console.log('[Internal server error] Something went wrong while fetching news. Error: ', err);
+    } catch (err) {
+        console.log('[Error] news-service->fetchNewsArticlesByCategory, Something went wrong while fetching news. Error: ', err);
+        throw err;
     }
 }
 
