@@ -1,6 +1,7 @@
 const uuid = require('uuid');
 const { exec, execFile } = require('child_process');
 const { JobExecution } = require('../models/entities');
+const { fileWrite } = require('../../cronos-common-modules/cronos-file-module/');
 
 const queueName = process.env.RABBIT_MQ_QUEUE;
 
@@ -23,6 +24,7 @@ class JobExecutorService {
                     jobExecutionObj.status = 'failed';
                     jobExecutionObj.execution_completed_at = new Date();
                     await jobExecutionObj.save();
+                    fileWrite.writeToFile(jobExecutionObj.output_file_path,error);
                     this.retryJob(jobObj);
                     return;
                 }
@@ -31,6 +33,7 @@ class JobExecutorService {
                     jobExecutionObj.status = 'failed';
                     jobExecutionObj.execution_completed_at = new Date();
                     await jobExecutionObj.save();
+                    fileWrite.writeToFile(jobExecutionObj.output_file_path, stderr);
                     this.retryJob(jobObj);
                     return;
                 }
@@ -38,6 +41,7 @@ class JobExecutorService {
                 jobExecutionObj.status = 'success';
                 jobExecutionObj.execution_completed_at = new Date();
                 await jobExecutionObj.save();
+                fileWrite.writeToFile(jobExecutionObj.output_file_path, stdout);
                 return;
             });
             jobExecutionObj.status = 'executing';
@@ -48,7 +52,7 @@ class JobExecutorService {
             jobExecutionObj.status = 'failed';
             jobExecutionObj.execution_completed_at = new Date();
             jobExecutionObj.save();
-
+            fileWrite.writeToFile(jobExecutionObj.output_file_path, error);
             this.retryJob(jobObj);
         }
     };
@@ -84,7 +88,7 @@ class JobExecutorService {
                 JobId: jobObj.id,
                 status: "claimed",
                 retry_count_no: jobObj.retry_count_no || 0,
-                output_file_path: 'logs/' + jobExecutionId + '.log',
+                output_file_path: './logs/' + jobExecutionId + '.log',
                 enqueued_at: jobObj.enqueued_at,
                 claimed_at: new Date(),
                 execution_started_at: null,

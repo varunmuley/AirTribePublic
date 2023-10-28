@@ -1,0 +1,1 @@
+module.exports.fileWrite = require('./file-write');
