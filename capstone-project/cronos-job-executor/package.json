@@ -1,0 +1,17 @@
+{
+  "name": "cronos-job-executor",
+  "version": "1.0.0",
+  "description": "CRONOS Job Executor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Varun Muley",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "dotenv": "^16.3.1",
+    "inversify": "^6.0.2",
+    "reflect-metadata": "^0.1.13"
+  }
+}

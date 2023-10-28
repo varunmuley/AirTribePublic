@@ -1,0 +1,29 @@
+{
+  "name": "cronos-job-scheduler",
+  "version": "1.0.0",
+  "description": "CRONOS Job scheduler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Varun Muley",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "inversify": "^6.0.2",
+    "jsonwebtoken": "^9.0.1",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.32.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "redis": "^4.6.10"
+  }
+}
