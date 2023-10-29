@@ -6,6 +6,8 @@ const authMiddleware = require('../middlewares/auth-middleware');
 jobsRouter.use(bodyParser.urlencoded({ extended: false }));
 jobsRouter.use(bodyParser.json());
 
+jobsRouter.use(authMiddleware).get('/jobs/executions', jobsController.getAllExecutions);
+jobsRouter.use(authMiddleware).get('/jobs/executions/:jobId', jobsController.getAllExecutionsForJob);
 jobsRouter.use(authMiddleware).get('/jobs', jobsController.getAllJobs);
 jobsRouter.use(authMiddleware).get('/jobs/:id', jobsController.getJob);
 jobsRouter.use(authMiddleware).post('/jobs', jobsController.createJob);

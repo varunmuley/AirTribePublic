@@ -52,9 +52,44 @@ const updateJob = async (req, res) => {
     }
 };
 
+const getAllExecutions = async (req, res) => {
+    try {
+        const allJobExecutions = await jobsService.getAllExecutions();
+        return res.status(200).send(allJobExecutions);
+    } catch(err) {
+        console.log(`[Error] 'jobs-controller'->'getAllExecutions' failed. Error: ${JSON.stringify(err)}`);
+        return res.status(500).send("Internal server error.");;
+    }
+};
+
+const getAllExecutionsForJob = async (req, res) => {
+    try {
+        const jobId = req.params.jobId;
+        const jobExecutions = await jobsService.getAllExecutionsForJob(jobId);
+        return res.status(200).send(jobExecutions);
+    } catch(err) {
+        console.log(`[Error] 'jobs-controller'->'getAllExecutionsForJob' failed. Error: ${JSON.stringify(err)}`);
+        return res.status(500).send("Internal server error.");;
+    }
+};
+
+const getExecutionDetails = async (req, res) => {
+    try {
+        const allJobExecutions = await jobsService.getAllExecutionsForJob();
+        return res.status(200).send(allJobs);
+    } catch(err) {
+        console.log(`[Error] 'jobs-controller'->'getExecutionDetails' failed. Error: ${JSON.stringify(err)}`);
+        return res.status(500).send("Internal server error.");;
+    }
+};
+
+
 module.exports = {
     getJob,
     getAllJobs,
     createJob,
-    updateJob
+    updateJob,
+    getAllExecutions,
+    getAllExecutionsForJob,
+    getExecutionDetails
 };

@@ -95,6 +95,42 @@ class JobService {
         }
     }
 
+    async getAllExecutions() {
+        try{
+            const jobExecutions = await entities.JobExecution.findAll();
+            return jobExecutions.map(j => j.dataValues);    
+        } catch (exp) {
+            return null;
+        }
+    }
+
+    async getAllExecutionsForJob(jobId) {
+        try {
+            const jobExecutions = await entities.JobExecution.findAll({ 
+                where: {
+                    JobId: jobId
+                }
+            });
+            return jobExecutions.map(j => j.dataValues);  
+        } catch (exp) {
+            return null;
+        }
+    }
+
+    async getExecutionDetails(executionId) {
+        try{
+            const jobExecution = await entities.JobExecution.findAll({ 
+                where: {
+                    id: executionId
+                }
+            });
+            return jobExecution;
+        } catch (exp) {
+            return null;
+        }
+    }
+
+
 }
 
 module.exports = JobService;
